@@ -1,0 +1,25 @@
+Topic description:
+- Book: Szeliski, R. (2022). Computer vision (2nd ed.). doi:10.1007/978-3-030-34372-9
+- Chapter 2: Image formation
+- Topic 2.1: Geometric primitives and transformations
+- Subtopic 2.1.1: 2D Transformations
+
+Topic content:
+- Basic 2D planar transformations:
+	- Translation
+		- #DoF: 2
+		- Preserves: Orientation
+	- Rigid (Euclidean)
+		- #DoF: 3
+		- Preserves: Lengths
+	- Similarity
+		- #DoF: 4
+		- Preserves: Angles
+	- Affine
+		- #DoF: 6
+		- Preserves: Parallelism
+	- Projective
+		- #DoF: 8
+		- Preserves: Straight lines
+	
+<!-- For each transformation, describe the associated matrix, the explanation for the corresponding number of DoF and the explanation of the preserved feature-->
