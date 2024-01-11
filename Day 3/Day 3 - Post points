@@ -1,0 +1,16 @@
+Topic description:
+- Book: Szeliski, R. (2022). Computer vision (2nd ed.). doi:10.1007/978-3-030-34372-9
+- Chapter 2: Image formation
+- Topic 2.1: Geometric primitives and transformations
+- Subtopic 2.1.4: 3D to 2D projections
+
+Post content:
+- Some projection models <!-- For each projection model provide a high level description and why it is important-->
+	- Orthography
+	- Scaled orthography
+	- para-perspective
+	- perspective
+- History of computer vision:
+	- Brief description of the camera obscura based on the perspective imaging with pinhole. Attaching the following clip extracted from youtube for a more in depth and visual explanation (https://youtube.com/clip/Ugkxc_iFHlfOH-i2_YzQpzwT8MsdItXRpQEj?feature=shared) explained by Shree Nayar who is faculty in the Computer Science Department, School of Engineering and Applied Sciences, Columbia University
+	
+
