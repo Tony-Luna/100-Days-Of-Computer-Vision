@@ -1,63 +1,75 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Sun Jan 21 22:08:27 2024
-
-@author: anlun
-"""
-
 import cv2
-import os
+import numpy as np
 import matplotlib.pyplot as plt
 
-def list_jpg_files(directory):
-    jpg_files = []
-    for filename in os.listdir(directory):
-        if filename.endswith(".jpg"):
-            jpg_files.append(filename)
-    return jpg_files
+def plot_histogram(img, title):
+    colors = ('b', 'g', 'r')
+    for i, color in enumerate(colors):
+        hist = cv2.calcHist([img], [i], None, [256], [0, 256])
+        plt.plot(hist, color=color)
+        plt.xlim([0, 256])
+    plt.title(title)
 
-def create_output_directory(directory):
-    if not os.path.exists(directory):
-        os.makedirs(directory)
+def equalize_hist_color(img):
+    channels = cv2.split(img)
+    eq_channels = []
+    for ch in channels:
+        eq_channels.append(cv2.equalizeHist(ch))
+    return cv2.merge(eq_channels)
 
-def display_and_save_subplots(images, output_directory, subplot_title):
-    fig, axs = plt.subplots(1, len(images), figsize=(8, 5))
-    fig.suptitle(subplot_title)
+def apply_clahe(img, clip_limit=2.0, tile_grid_size=(8, 8)):
+    clahe = cv2.createCLAHE(clipLimit=clip_limit, tileGridSize=tile_grid_size)
+    channels = cv2.split(img)
+    eq_channels = []
+    for ch in channels:
+        eq_channels.append(clahe.apply(ch))
+    return cv2.merge(eq_channels)
 
-    for i, img in enumerate(images):
-        axs[i].imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
-        axs[i].axis('off')
-
-    plt.savefig(os.path.join(output_directory, 'all_images_subplot.jpg'))
+def main():
+    # Load the image
+    img = cv2.imread('Images/4.jpg')
+    
+    # Color histogram equalization
+    eq_color_img = equalize_hist_color(img)
+    
+    # CLAHE on color image
+    clahe_img = apply_clahe(img)
+    
+    # Plotting
+    plt.figure(figsize=(15, 10))
+    
+    # Original Image
+    plt.subplot(3, 2, 1)
+    plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
+    plt.title('Original Image')
+    plt.axis('off')
+    
+    # Original Histogram
+    plt.subplot(3, 2, 2)
+    plot_histogram(img, 'Original Histogram')
+    
+    # Equalized Image
+    plt.subplot(3, 2, 3)
+    plt.imshow(cv2.cvtColor(eq_color_img, cv2.COLOR_BGR2RGB))
+    plt.title('Equalized Image')
+    plt.axis('off')
+    
+    # Equalized Histogram
+    plt.subplot(3, 2, 4)
+    plot_histogram(eq_color_img, 'Equalized Histogram')
+    
+    # CLAHE Image
+    plt.subplot(3, 2, 5)
+    plt.imshow(cv2.cvtColor(clahe_img, cv2.COLOR_BGR2RGB))
+    plt.title('CLAHE Image')
+    plt.axis('off')
+    
+    # CLAHE Histogram
+    plt.subplot(3, 2, 6)
+    plot_histogram(clahe_img, 'CLAHE Histogram')
+    
+    plt.tight_layout()
     plt.show()
 
-def stitch_images(directory, output_directory):
-    image_files = list_jpg_files(directory)
-    images = [cv2.imread(os.path.join(directory, file)) for file in image_files]
-
-    # Display and save the subplot of all images
-    display_and_save_subplots(images, output_directory, "Original Images")
-
-    print("Starting the stitching process. This may take a while...")
-    stitcher = cv2.Stitcher_create()
-    status, stitched_image = stitcher.stitch(images)
-
-    if status == cv2.Stitcher_OK:
-        print("Stitching completed. Saving the stitched image.")
-        cv2.imwrite(os.path.join(output_directory, 'panorama.jpg'), stitched_image)
-        plt.imshow(cv2.cvtColor(stitched_image, cv2.COLOR_BGR2RGB))
-        plt.axis('off')
-        plt.savefig(os.path.join(output_directory, 'stitched_image.jpg'))
-        plt.show()
-    else:
-        print("Stitching failed. Error code: ", status)
-
-def main(images_directory):
-    output_directory = "output"
-    create_output_directory(output_directory)
-    stitch_images(images_directory, output_directory)
-    
 if __name__ == "__main__":
-    images_directory = "Images Art"
-    
-    main(images_directory)
+    main()
