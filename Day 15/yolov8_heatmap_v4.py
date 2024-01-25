@@ -12,11 +12,11 @@ from tqdm import tqdm
 import os
 
 # Constants and parameters
-VIDEO_PATH = "Datasets/Test videos/art_expo_timelapse.mp4"
+VIDEO_PATH = "Inputs/art_expo_timelapse.mp4"
 TRACK_COLOR = (0, 255, 0)
 MODEL_PATH = 'yolov8m.pt'
 CIRCLE_DIAMETER_PROPORTION = 0.3  # Proportion of the width of bounding boxes
-EXPERIMENT_NAME = 'Art_Expo_3_Analysis'  # Define the experiment name
+EXPERIMENT_NAME = 'Art_Expo_Analysis'  # Define the experiment name
 OUTPUT_DIR = f"Outputs/{EXPERIMENT_NAME}/Heatmaps"
 
 # Ensure output directory exists
