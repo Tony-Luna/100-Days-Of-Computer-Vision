@@ -1,5 +1,7 @@
 # 😎 Face Detection with Glasses Overlay
 
+![Demo](assets/demo.gif)
+
 ## 📝 Overview
 This project demonstrates a face detection application that overlays glasses on detected faces in real-time using OpenCV. The primary components of the project include face detection, glasses overlay application, and video processing. The output video is saved to a specified directory, ensuring the real-time feed and the saved video maintain consistent speeds.
 
